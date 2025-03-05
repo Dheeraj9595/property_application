@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Book</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Create a New Book</h2>
+    
+    <form id="bookForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#bookForm").submit(function(event) {
+                event.preventDefault();  // Prevent normal form submission
+
+                $.ajax({
+                    url: "{% url 'create_book' %}",  // Update with your URL name
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $("#message").html(`<p style="color:green;">${response.message}</p>`);
+                        $("#bookForm")[0].reset(); // Reset form after success
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessage = "<ul>";
+                        for (let field in errors) {
+                            errorMessage += `<li>${field}: ${errors[field].join(", ")}</li>`;
+                        }
+                        errorMessage += "</ul>";
+                        $("#message").html(`<p style="color:red;">${errorMessage}</p>`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
