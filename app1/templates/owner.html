@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner List</title>
+</head>
+<body>
+    <h2>Owner List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Mobile</th>
+            </tr>
+        </thead>
+        <tbody id="owners-table">
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        function fetchOwners() {
+            fetch("http://localhost:8000/api/owner/")
+                .then(response => response.json())
+                .then(data => {
+                    const ownersTable = document.getElementById("owners-table");
+                    ownersTable.innerHTML = ""; // Clear previous content
+
+                    // Check if 'results' exists in response
+                    if (data.results && data.results.length > 0) {
+                        data.results.forEach(owner => {
+                            const row = document.createElement("tr");
+
+                            row.innerHTML = `
+                                <td>${owner.id}</td>
+                                <td>${owner.name}</td>
+                                <td>${owner.mobile}</td>
+                            `;
+
+                            ownersTable.appendChild(row);
+                        });
+                    } else {
+                        ownersTable.innerHTML = "<tr><td colspan='3'>No owners found</td></tr>";
+                    }
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+
+        // Call function on page load
+        window.onload = fetchOwners;
+    </script>
+</body>
+</html>
