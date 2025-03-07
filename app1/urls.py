@@ -1,35 +1,21 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-import app1.views
-from app1.views import (
-    BookListCreate,
-    BookRetrieveUpdateDestroy,
-    UserViewSet,
-    BookViewSet,
-    CustomUsersView,
-    StudentsViewSet, 
-    create_book
-)
-
+from app1.views import (Owner_list_view, OwnerViewSet, PropertyViewSet,
+                        aboutus, Property_list, home, property_create, property_form, property_form_view)
 
 router = DefaultRouter()
 
-router.register(r"users", UserViewSet)
-router.register(r"newbooks", BookViewSet)
-router.register(r'CustomUser', CustomUsersView)
-router.register(r'students', StudentsViewSet)
+router.register('property', PropertyViewSet)
+router.register('owner', OwnerViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("books/", app1.views.create_book, name="book-list-create"),
-    path("getbooks/", app1.views.get_books, name="book-list"),
-    path("newbooks/", BookListCreate.as_view(), name="book-list-create"),
-    path(
-        "books/<int:pk>/",
-        BookRetrieveUpdateDestroy.as_view(),
-        name="book-retrieve-update-destroy",
-    ),
-    # path('add-book/', create_book, name='add_book'),
-    path("create-book/", create_book, name="create_book"),
-]
+    path("create-property/", property_form, name="create_property"),
+    path("ownerlist/", Owner_list_view, name="owner-list-view"),
+    path("property-create/", property_create, name="property-create"),
+    path("home/", home, name="home"),
+    path("aboutus/", aboutus, name="aboutus"),
+    path("buying/", Property_list, name="buying"),
+    path("create-property-form/", property_form_view, name="property_form"),
+    ]
