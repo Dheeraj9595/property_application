@@ -47,3 +47,5 @@ class Property(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.get_property_type_display()} - {self.owner.name}"
+
+"""new"""
