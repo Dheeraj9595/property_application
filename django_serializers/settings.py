@@ -147,7 +147,7 @@ CORS_ALLOW_METHODS = ["*"]
 
 import os
 
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # # Ensure Django looks inside each app's "static" folder
 # STATICFILES_DIRS = [
@@ -156,3 +156,12 @@ import os
 
 # Where Django collects static files during "collectstatic"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# Optional: If you have additional static directories
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
+
+# Required for production
+STATIC_ROOT = BASE_DIR / "staticfiles"

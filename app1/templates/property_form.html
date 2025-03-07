@@ -5,86 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Property</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        .header, .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-        }
-        .header img {
-            width: 229px;
-            height: 36px;
-        }
-        .nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        .nav ul li {
-            display: inline;
-            margin: 0 10px;
-        }
-        .nav ul li a {
-            color: white;
-            text-decoration: none;
-        }
-        .nav ul li a:hover {
-            text-decoration: underline;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: auto;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background: #28a745;
-            color: white;
-            padding: 10px;
-            border: none;
-            width: 100%;
-            margin-top: 15px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        button:hover {
-            background: #218838;
-        }
-        #message {
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'app1/css/property_form.css'%}">
+
 </head>
 <body>
-
     <!-- Header -->
     <div class="header">
         <img src="{% static 'app1/images/logo.jpg' %}" alt="Logo">
@@ -98,7 +22,6 @@
             </ul>
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="container">
         <h2 style="text-align: center;">Create a Property</h2>
@@ -136,7 +59,6 @@
             <p id="message"></p>
         </form>
     </div>
-
     <!-- Footer -->
     <div class="footer">
         <p>© 2024 All Rights Reserved</p>
@@ -145,51 +67,7 @@
             <a href="#" class="footerlinks">Contact Us</a>
         </p>
     </div>
-
-    <script>
-        document.getElementById("propertyForm").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Prevent form submission
-
-            const title = document.getElementById("title").value;
-            const owner = document.getElementById("owner").value;
-            const area = document.getElementById("area").value;
-            const property_type = document.getElementById("property_type").value;
-            const property_subtype = document.getElementById("property_subtype").value;
-
-            const data = {
-                title,
-                owner,
-                area,
-                property_type,
-                property_subtype
-            };
-
-            try {
-                const response = await fetch("http://127.0.0.1:8000/api/create-property/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                const result = await response.json();
-                
-                if (response.ok) {
-                    document.getElementById("message").innerText = "Property Created Successfully!";
-                    document.getElementById("message").style.color = "green";
-                    document.getElementById("propertyForm").reset(); // Reset form
-                } else {
-                    document.getElementById("message").innerText = "Error: " + JSON.stringify(result);
-                    document.getElementById("message").style.color = "red";
-                }
-
-            } catch (error) {
-                document.getElementById("message").innerText = "Error: " + error.message;
-                document.getElementById("message").style.color = "red";
-            }
-        });
-    </script>
-
+    <!-- JavaScript File (Placed Before Closing Body Tag) -->
+    <script src="{% static 'app1/js/property_form.js' %}"></script>
 </body>
 </html>
