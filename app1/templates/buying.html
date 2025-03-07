@@ -1,71 +1,34 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Available Properties</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'app1/css/buying.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Available Properties{% endblock %}
 
-    <!-- Header -->
-    <div class="header">
-        <img src="{% static 'app1/images/logo.jpg' %}" alt="Logo">
-        <div class="nav">
-            <ul>
-                <li><a href="http://localhost:8000/api/home/">Home</a></li>
-                <li><a href="http://localhost:8000/api/aboutus/">About Us</a></li>
-                <li><a href="#">Rentals</a></li>
-                <li><a href="#">Moving</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container">
-        <h2 class="text-center">Available Properties</h2>
-        
-        <table class="table table-striped table-bordered mt-3">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Area</th>
-                    <th>Size</th>
-                    <th>Owner</th>
-                    <th>Mobile</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for property in properties %}
-                <tr>
-                    <td>{{ property.id }}</td>
-                    <td>{{ property.title }}</td>
-                    <td>{{ property.area }}</td>
-                    <td>{{ property.property_subtype }}</td>
-                    <td>{{ property.owner.name }}</td>
-                    <td>{{ property.owner.mobile }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="3" class="text-center">No properties available.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>© 2024 All Rights Reserved</p>
-        <p>
-            <a href="#" class="footerlinks">About Us</a> | 
-            <a href="#" class="footerlinks">Contact Us</a>
-        </p>
-    </div>
-
-</body>
-</html>
+{% block content %}
+<h2 class="text-center">Available Properties</h2>
+<table class="table table-striped table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Area</th>
+            <th>Size</th>
+            <th>Owner</th>
+            <th>Mobile</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for property in properties %}
+        <tr>
+            <td>{{ property.id }}</td>
+            <td>{{ property.title }}</td>
+            <td>{{ property.area }}</td>
+            <td>{{ property.property_subtype }}</td>
+            <td>{{ property.owner.name }}</td>
+            <td>{{ property.owner.mobile }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center">No properties available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -75,7 +75,7 @@ from .models import Property
 
 def property_form_view(request):
     if request.method == "POST":
-        breakpoint()
+        # breakpoint()
         form = PropertyForm(request.POST)
         if form.is_valid():
             form.save()

@@ -73,15 +73,3 @@
             text-align: center;
             font-weight: bold;
         }
-        .buying {
-            transform: translateX(950px) translateY(-20px); /* Moves right by 50px */
-        }
-        
-        
-        .selling{
-            transform: translateX(950px);
-        }        
-
-        .leftmenu{
-            transform: translateY(-220px);
-        }
