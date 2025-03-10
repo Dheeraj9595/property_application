@@ -5,17 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Real Estate{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app1/css/base.css'%}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 
     <!-- Header -->
-    <div class="header bg-dark text-white text-center p-3">
-        <img src="{% static 'app1/images/logo.jpg' %}" width="229" height="36" alt="Logo">
+    <div class="header bg-dark text-white text-center p-3 navbar">
+        <a href="{% url 'home'%}">
+            <img src="{% static 'app1/images/logo.jpg' %}" width="229" height="36" alt="Logo">
+        </a>
         <nav>
             <a href="{% url 'home' %}" class="text-white px-3">Home</a>
             <a href="{% url 'aboutus' %}" class="text-white px-3">About Us</a>
-            <a href="#" class="text-white px-3">Rentals</a>
+            <a href="{% url 'rental_form' %}" class="text-white px-3">Rentals</a>
             <a href="#" class="text-white px-3">Moving</a>
             <a href="#" class="text-white px-3">Contact Us</a>
         </nav>
@@ -27,7 +30,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer bg-dark text-white text-center p-3 mt-4">
+    <div class="footer bg-dark text-white text-center p-3 mt-4 down">
         <p>© 2024 All Rights Reserved</p>
         <p>
             <a href="#" class="text-white">About Us</a> | 

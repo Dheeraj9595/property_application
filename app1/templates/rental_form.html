@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Rental Property{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'app1/css/property_form.css'%}">
+<h2 class="postproperty">Post a Rent Property</h2>
+<form method="POST" id="rentalpropertyForm" class="p-4 bg-white shadow rounded">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        {{ form.title }}
+    </div>
+
+    <div class="mb-3">
+        <label for="owner" class="form-label">Owner</label>
+        {{ form.owner }}
+    </div>            
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        {{ form.location }}
+    </div>
+
+    <div class="mb-3">
+        <label for="property_type" class="form-label">Property Type</label>
+        {{ form.property_type }}
+    </div>
+
+    <div class="mb-3">
+        <label for="property_subtype" class="form-label">Property Subtype</label>
+        {{ form.property_subtype }}
+    </div>
+
+    <div class="mb-3">
+        <label for="rent_price" class="form-label">rent_price</label>
+        {{ form.rent_price }}
+    </div>
+    <div class="mb-3">
+        <label for="available_from" class="form-label">available_from</label>
+        {{ form.available_from }}
+    </div>
+    <button type="submit" class="btn btn-success w-100">Create Rental Property</button>
+</form>
+<style>
+    body {
+        background-image: url("{% static 'app1/images/buying.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+    }
+</style>
+<p id="message" class="text-center mt-3"></p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById("rentalpropertyForm").addEventListener("submit", async function(event) {
+
+        event.preventDefault(); 
+
+        const formData = new FormData(this);
+        const response = await fetch("{% url 'rental_form' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+}
+
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            document.getElementById("message").innerText = "Property Created Successfully!";
+            document.getElementById("message").style.color = "green";
+            this.reset();
+        } else {
+            document.getElementById("message").innerText = "Error: " + JSON.stringify(result.errors);
+            document.getElementById("message").style.color = "red";
+        }
+    });
+</script>
+{% endblock %}

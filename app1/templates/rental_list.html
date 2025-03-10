@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Rental Properties{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'app1/css/rental_list.css' %}">
+
+<div class="container mt-4">
+    <h2 class="text-center">Available Rental Properties</h2>
+    
+    <div class="row">
+        {% for property in properties %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <a href="{% url 'rental_detail' property.id %}">
+                    <img src="{{ property.image.url }}" 
+                         class="card-img-top" 
+                         alt="Property Image" 
+                         onerror="this.onerror=null; this.src='{% static 'app1/images/default_property.jpg' %}'">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ property.title }}</h5>
+                    <p class="card-text">{{ property.description|truncatechars:100 }}</p>
+                    <a href="{% url 'rental_detail' property.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No rental properties available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ property.title }} - Rental Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ property.title }}</h2>
+    
+    <img src="{{ property.image.url }}" 
+         class="img-fluid mb-3" 
+         alt="Property Image" 
+         onerror="this.onerror=null; this.src='{% static 'app1/images/default_property.jpg' %}'">
+
+    <p><strong>Location:</strong> {{ property.location }}</p>
+    <p><strong>Property Type:</strong> {{ property.property_type }}</p>
+    <p><strong>Rent Price:</strong> ${{ property.rent_price }}</p>
+    <p><strong>Available From:</strong> {{ property.available_from }}</p>
+    <p><strong>Description:</strong> {{ property.description }}</p>
+
+    <a href="{% url 'rental_list' %}" class="btn btn-secondary">Back to Listings</a>
+</div>
+{% endblock %}

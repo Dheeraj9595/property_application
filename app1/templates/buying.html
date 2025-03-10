@@ -31,7 +31,15 @@
             <td colspan="6" class="text-center">No properties available.</td>
         </tr>
         {% endfor %}
-
+        <style>
+            body {
+                background-image: url("{% static 'app1/images/selling_backgroundd.jpg' %}");
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;
+            }
+        </style>
         <!-- Pagination Controls -->
 <div class="pagination">
     {% if properties.has_previous %}

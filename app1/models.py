@@ -47,5 +47,24 @@ class Property(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.get_property_type_display()} - {self.owner.name}"
+    
+class RentalProperty(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=255)
+    property_type = models.CharField(max_length=50, choices=[("Apartment", "Apartment"), ("House", "House"), ("Office", "Office"), ("COMMERCIAL", "Commercial"), ("VILLA", "Villa")])
+    property_subtype = models.CharField(
+        max_length=20, choices=[
+        ("2BHK", "2BHK"),
+         ("3BHK","3BHK"),
+         ("4BHK","4BHK"),
+         ("VILLA","VILLA"),
+         ("PANT HOUSE","PANT HOUSE"),
+         ("OTHERS","OTHERS")], default="OTHERS"
+    )
+    rent_price = models.DecimalField(max_digits=10, decimal_places=2)
+    available_from = models.DateField()
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name="rental_properties")
 
-"""new"""
+    def __str__(self):
+        return self.title    
