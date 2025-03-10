@@ -10,13 +10,13 @@
     
     <div class="row">
         {% for property in properties %}
-        <div class="col-md-4">
+        <div class="col-md-4 rental_detail">
             <div class="card mb-4">
                 <a href="{% url 'rental_detail' property.id %}">
                     <img src="{{ property.image.url }}" 
                          class="card-img-top" 
                          alt="Property Image" 
-                         onerror="this.onerror=null; this.src='{% static 'app1/images/default_property.jpg' %}'">
+                         onerror="this.onerror=null; this.src='{% static 'app1/images/default_property.png' %}'">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ property.title }}</h5>

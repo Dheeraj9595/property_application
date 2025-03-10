@@ -119,6 +119,10 @@ def rental_form_view(request):
     form = RentalForm()
     return render(request, "rental_form.html", {"form": form})
 
+def rental_home(request):
+    return render(request, 'rental_home.html')
+
+
 from django.shortcuts import render, get_object_or_404
 
 def rental_list(request):

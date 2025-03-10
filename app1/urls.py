@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from app1.views import (Owner_list_view, OwnerViewSet, RentalPropertyView ,PropertyViewSet,
                         aboutus, Property_list, home, property_create, property_form, property_form_view, rental_form_view,
-                        rental_list, rental_detail)
+                        rental_list, rental_detail, rental_home)
 
 router = DefaultRouter()
 
@@ -22,6 +22,7 @@ urlpatterns = [
     path("create-property-form/", property_form_view, name="property_form"),
     path("create-rental-property-form/", rental_form_view, name="rental_form"),
     path('rentals/', rental_list, name='rental_list'),
+    path('rental-home/', rental_home, name='rental home'),
     path('rentals/<int:pk>/', rental_detail, name='rental_detail'),
 
     ]
