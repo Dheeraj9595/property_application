@@ -18,7 +18,7 @@ from .serializers import OwnerSerializer, PropertySerializer, RentalPropertySeri
 @method_decorator(csrf_exempt, name="dispatch")
 class PropertyViewSet(viewsets.ModelViewSet):
     queryset = Property.objects.all().order_by('-id')
-    serializer_class = RentalPropertySerializer
+    serializer_class = PropertySerializer
 
     def create(self, request, *args, **kwargs):
         try:

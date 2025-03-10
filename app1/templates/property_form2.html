@@ -3,7 +3,7 @@
 {% block title %}Create Property{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'app1/css/property_form.css'%}">
+<link rel="stylesheet" href="{% static 'app1/css/property_form.css' %}">
 <h2 class="postproperty">Post a Property</h2>
 <form method="POST" id="propertyForm" class="p-4 bg-white shadow rounded">
     {% csrf_token %}
@@ -35,6 +35,7 @@
 
     <button type="submit" class="btn btn-success w-100">Create Property</button>
 </form>
+
 <style>
     body {
         background-image: url("{% static 'app1/images/buying.jpg' %}");
@@ -44,33 +45,10 @@
         background-position: center;
     }
 </style>
+
 <p id="message" class="text-center mt-3"></p>
 {% endblock %}
 
 {% block scripts %}
-<script>
-    document.getElementById("propertyForm").addEventListener("submit", async function(event) {
-        event.preventDefault(); 
-
-        const formData = new FormData(this);
-        const response = await fetch("{% url 'property_form' %}", {
-            method: "POST",
-            body: formData,
-            headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            document.getElementById("message").innerText = "Property Created Successfully!";
-            document.getElementById("message").style.color = "green";
-            this.reset();
-        } else {
-            document.getElementById("message").innerText = "Error: " + JSON.stringify(result.errors);
-            document.getElementById("message").style.color = "red";
-        }
-    });
-</script>
+<script src="{% static 'app1/js/property_form.js' %}"></script>
 {% endblock %}
