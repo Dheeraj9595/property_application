@@ -2,6 +2,7 @@ import json
 
 import requests
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
@@ -51,11 +52,15 @@ def aboutus(request):
 from django.http import HttpResponse
 from django.template import loader
 
+
 def Property_list(request):
     mydata = Property.objects.all().order_by("-id")
+    paginator = Paginator(mydata, 7)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     template = loader.get_template('buying.html')
     context = {
-        'properties': mydata,
+        'properties': page_obj,
     }
     return HttpResponse(template.render(context, request))
 
@@ -68,10 +73,12 @@ def Owner_list_view(request):
     return render(request, 'owner.html')   
 
 
-from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.shortcuts import redirect, render
+
 from .forms import PropertyForm
 from .models import Property
+
 
 def property_form_view(request):
     if request.method == "POST":

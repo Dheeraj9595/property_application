@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Create Property{% endblock %}
 
 {% block content %}
-<h2 class="text-center">Create a Property</h2>
+<link rel="stylesheet" href="{% static 'app1/css/property_form.css'%}">
+<h2 class="postproperty">Post a Property</h2>
 <form method="POST" id="propertyForm" class="p-4 bg-white shadow rounded">
     {% csrf_token %}
 

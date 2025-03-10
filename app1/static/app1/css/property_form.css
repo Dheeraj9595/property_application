@@ -41,6 +41,7 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             margin: auto;
+            transform: translateY(-45px);
         }
         label {
             font-weight: bold;
@@ -84,4 +85,34 @@
 
         .leftmenu{
             transform: translateY(-220px);
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Adjust opacity for darker/lighter effect */
+            z-index: -1;
+        }
+        
+        .postproperty{
+            transform: translate(480px, -40px);
+        }
+        .first{
+            transform: translate(892px, 400px);
+        }
+        .previous{
+            transform: translate(906px, 400px);
+        }
+        .next{
+            transform: translate(933px, 400px);
+        }
+        .last{
+            transform: translate(939px, 400px);
+        }
+        .pageof{
+            transform: translate(923px, 401px);
+        }
+        .buyingtable{
+            transform: translate(12px, -46px);
         }
