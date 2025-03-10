@@ -8,41 +8,53 @@
 <form method="POST" id="rentalpropertyForm" class="p-4 bg-white shadow rounded">
     {% csrf_token %}
 
-    <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        {{ form.title }}
+    <!-- Row for Title and Owner -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="title" class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="owner" class="form-label">Owner</label>
+            {{ form.owner }}
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="owner" class="form-label">Owner</label>
-        {{ form.owner }}
-    </div>            
-
-    <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        {{ form.location }}
+    <!-- Row for Location and Property Type -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="location" class="form-label">Location</label>
+            {{ form.location }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="property_type" class="form-label">Property Type</label>
+            {{ form.property_type }}
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="property_type" class="form-label">Property Type</label>
-        {{ form.property_type }}
+    <!-- Row for Property Subtype -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="property_subtype" class="form-label">Property Subtype</label>
+            {{ form.property_subtype }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="rent_price" class="form-label">Rent Price</label>
+            {{ form.rent_price }}
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="property_subtype" class="form-label">Property Subtype</label>
-        {{ form.property_subtype }}
+    <!-- Row for Available From -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="available_from" class="form-label">Available From</label>
+            {{ form.available_from }}
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="rent_price" class="form-label">rent_price</label>
-        {{ form.rent_price }}
-    </div>
-    <div class="mb-3">
-        <label for="available_from" class="form-label">available_from</label>
-        {{ form.available_from }}
-    </div>
     <button type="submit" class="btn btn-success w-100">Create Rental Property</button>
 </form>
+
 <style>
     body {
         background-image: url("{% static 'app1/images/buying.jpg' %}");
@@ -52,36 +64,10 @@
         background-position: center;
     }
 </style>
+
 <p id="message" class="text-center mt-3"></p>
 {% endblock %}
 
 {% block scripts %}
-<script>
-    document.getElementById("rentalpropertyForm").addEventListener("submit", async function(event) {
-
-        event.preventDefault(); 
-
-        const formData = new FormData(this);
-        const response = await fetch("{% url 'rental_form' %}", {
-            method: "POST",
-            body: formData,
-            headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
-}
-
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            document.getElementById("message").innerText = "Property Created Successfully!";
-            document.getElementById("message").style.color = "green";
-            this.reset();
-        } else {
-            document.getElementById("message").innerText = "Error: " + JSON.stringify(result.errors);
-            document.getElementById("message").style.color = "red";
-        }
-    });
-</script>
+<script src="{% static 'app1/js/rental_form.js' %}"></script>
 {% endblock %}

@@ -8,24 +8,26 @@
 <form method="POST" id="propertyForm" class="p-4 bg-white shadow rounded">
     {% csrf_token %}
 
-    <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        {{ form.title }}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="title" class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="owner" class="form-label">Owner</label>
+            {{ form.owner }}
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label for="owner" class="form-label">Owner</label>
-        {{ form.owner }}
-    </div>            
-
-    <div class="mb-3">
-        <label for="area" class="form-label">Area</label>
-        {{ form.area }}
-    </div>
-
-    <div class="mb-3">
-        <label for="property_type" class="form-label">Property Type</label>
-        {{ form.property_type }}
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="location" class="form-label">Area</label>
+            {{ form.area }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="property_type" class="form-label">Property Type</label>
+            {{ form.property_type }}
+        </div>
     </div>
 
     <div class="mb-3">

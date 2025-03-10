@@ -41,7 +41,9 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             margin: auto;
-            transform: translateY(-45px);
+            transform: translateY(-7px);
+        
+
         }
         label {
             font-weight: bold;
@@ -96,7 +98,7 @@
         }
         
         .postproperty{
-            transform: translate(427px, -40px);
+            transform: translate(455px, -40px);
             color:rgb(12, 27, 110);
             font-weight: bold;
         }
@@ -177,4 +179,3 @@
             color: #1ead19; /* Change to red on hover */
             text-decoration: underline; /* Optional: Add underline */
         }
-                
