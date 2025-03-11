@@ -103,7 +103,7 @@ def property_form_view(request):
             return JsonResponse({"errors": form.errors}, status=400)
     
     form = PropertyForm()
-    return render(request, "property_form2.html", {"form": form})
+    return render(request, "property_form.html", {"form": form})
 
 
 def rental_form_view(request):

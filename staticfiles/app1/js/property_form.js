@@ -41,3 +41,31 @@
                 document.getElementById("message").style.color = "red";
             }
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("propertyForm").addEventListener("submit", async function (event) {
+                event.preventDefault();
+        
+                const formData = new FormData(this);
+                const response = await fetch("http://127.0.0.1:8000/api/create-property/", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                });
+        
+                const result = await response.json();
+        
+                const messageElement = document.getElementById("message");
+                if (response.ok) {
+                    messageElement.innerText = "Property Created Successfully!";
+                    messageElement.style.color = "green";
+                    this.reset();
+                } else {
+                    messageElement.innerText = "Error: " + JSON.stringify(result.errors);
+                    messageElement.style.color = "red";
+                }
+            });
+        });
+        

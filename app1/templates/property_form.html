@@ -1,73 +1,46 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Property</title>
-    <link rel="stylesheet" href="{% static 'app1/css/property_form.css'%}">
+{% block title %}Create Property{% endblock %}
 
-</head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <img src="{% static 'app1/images/logo.jpg' %}" alt="Logo">
-        <div class="nav">
-            <ul>
-                <li><a href="http://localhost:8000/api/home/">Home</a></li>
-                <li><a href="http://localhost:8000/api/aboutus/">About Us</a></li>
-                <li><a href="#">Rentals</a></li>
-                <li><a href="#">Moving</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
+{% block content %}
+<link rel="stylesheet" href="{% static 'app1/css/property_form.css' %}">
+<h2 class="postproperty">Post a Property</h2>
+<form method="POST" id="propertyForm" class="p-4 bg-white shadow rounded">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="title" class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="owner" class="form-label">Owner</label>
+            {{ form.owner }}
         </div>
     </div>
-    <!-- Main Content -->
-    <div class="container">
-        <h2 style="text-align: center;">Create a Property</h2>
-        <form id="propertyForm">
-            <label for="title">Title</label>
-            <input type="text" id="title" required>
-
-            <label for="owner">Owner ID</label>
-            <input type="number" id="owner" required>
-
-            <label for="area">Area</label>
-            <input type="text" id="area" required>
-
-            <label for="property_type">Property Type</label>
-            <select id="property_type">
-                <option value="HOUSE">House</option>
-                <option value="APARTMENT">Apartment</option>
-                <option value="COMMERCIAL">Commercial</option>
-                <option value="LAND">Land</option>
-                <option value="VILLA">Villa</option>
-                <option value="FARMHOUSE">Farmhouse</option>
-            </select>
-
-            <label for="property_subtype">Property Subtype</label>
-            <select id="property_subtype">
-                <option value="2BHK">2BHK</option>
-                <option value="3BHK">3BHK</option>
-                <option value="4BHK">4BHK</option>
-                <option value="VILLA">Villa</option>
-                <option value="PENTHOUSE">Penthouse</option>
-                <option value="OTHERS">Others</option>
-            </select>
-
-            <button type="submit">Create Property</button>
-            <p id="message"></p>
-        </form>
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="location" class="form-label">Area</label>
+            {{ form.area }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="property_type" class="form-label">Property Type</label>
+            {{ form.property_type }}
+        </div>
     </div>
-    <!-- Footer -->
-    <div class="footer">
-        <p>© 2024 All Rights Reserved</p>
-        <p>
-            <a href="#" class="footerlinks">About Us</a> | 
-            <a href="#" class="footerlinks">Contact Us</a>
-        </p>
+
+    <div class="mb-3">
+        <label for="property_subtype" class="form-label">Property Subtype</label>
+        {{ form.property_subtype }}
     </div>
-    <!-- JavaScript File (Placed Before Closing Body Tag) -->
-    <script src="{% static 'app1/js/property_form.js' %}"></script>
-</body>
-</html>
+
+    <button type="submit" class="btn btn-success w-100">Create Property</button>
+</form>
+
+<p id="message" class="text-center mt-3"></p>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app1/js/property_form.js' %}"></script>
+{% endblock %}
