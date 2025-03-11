@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'loginapplication/css/profile.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Profile</h2>
+        <label>Username:</label>
+        <input type="text" id="username" disabled>
+        <label>Email:</label>
+        <input type="email" id="email">
+        <label>First Name:</label>
+        <input type="text" id="first_name">
+        <label>Last Name:</label>
+        <input type="text" id="last_name">
+        <button onclick="updateProfile()">Update Profile</button>
+        <p id="message"></p>
+    </div>        
+        <script src="{% static 'loginapplication/js/profile.js' %}"></script>
+</body>
+</html>

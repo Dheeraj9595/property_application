@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "app1",
     "corsheaders",
     "loginapplication",
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -77,16 +78,22 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',  # Uses Django sessions
-        'rest_framework.authentication.TokenAuthentication',  # For API token-based auth
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # By default, restrict all views
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.SessionAuthentication',  # Uses Django sessions
+#         'rest_framework.authentication.TokenAuthentication',  # For API token-based auth
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',  # By default, restrict all views
+#     )
+# }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 WSGI_APPLICATION = "django_serializers.wsgi.application"
 

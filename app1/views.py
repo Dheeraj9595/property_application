@@ -1,18 +1,20 @@
 import json
 
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics, status, viewsets
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Owner, Property, RentalProperty
-from .serializers import OwnerSerializer, PropertySerializer, RentalPropertySerializer
-from django.contrib.auth.decorators import login_required
+from .serializers import (OwnerSerializer, PropertySerializer,
+                          RentalPropertySerializer)
+
 
 @method_decorator(csrf_exempt, name="dispatch")
 class PropertyViewSet(viewsets.ModelViewSet):
@@ -59,6 +61,11 @@ def property_create(request):
 
 @login_required
 def home(request):
+    user = request.user
+    if user.is_landlord():
+        return redirect("property_form")
+    if user.is_tenant():
+        return redirect("buying")
     return render(request, "index.html")
 
 @login_required
@@ -68,6 +75,7 @@ def aboutus(request):
 
 from django.http import HttpResponse
 from django.template import loader
+
 
 @login_required
 def Property_list(request):
@@ -85,7 +93,6 @@ def Property_list(request):
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
     serializer_class = OwnerSerializer
-    # pagination_class = 
 
 @login_required
 def Owner_list_view(request): 
@@ -97,6 +104,7 @@ from django.shortcuts import redirect, render
 
 from .forms import PropertyForm, RentalForm
 from .models import Property
+
 
 @login_required
 def property_form_view(request):
@@ -130,7 +138,9 @@ def rental_home(request):
     return render(request, 'rental_home.html')
 
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
+
+
 @login_required
 def rental_list(request):
     properties = RentalProperty.objects.all()
