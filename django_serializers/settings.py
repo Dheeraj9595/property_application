@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "app1",
-    "corsheaders"
+    "corsheaders",
+    "loginapplication",
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,17 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',  # Uses Django sessions
+        'rest_framework.authentication.TokenAuthentication',  # For API token-based auth
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # By default, restrict all views
+    )
+}
+
 
 WSGI_APPLICATION = "django_serializers.wsgi.application"
 
@@ -130,7 +142,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-# AUTH_USER_MODEL = 'app1.CustomUser'
 
 # Allow all origins (for development)
 CORS_ALLOW_ALL_ORIGINS = True
@@ -165,3 +176,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Required for production
 STATIC_ROOT = BASE_DIR / "staticfiles"
+AUTH_USER_MODEL = 'loginapplication.User'
+
+LOGIN_URL = '/login/'  # Change to your actual login URL
