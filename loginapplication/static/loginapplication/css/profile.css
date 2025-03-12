@@ -120,3 +120,40 @@ button.updateprofile {
 .lastname{
     transform: translate(26px, -35px);
 }
+
+.oldpassword{
+    transform: translate(38px, 10px);
+}
+
+.newpassword{
+    transform: translate(38px, 10px);
+}
+
+
+button.updatepassword {
+    width: 200px; /* Adjust button width */
+    height: 35px; /* Adjust button height */
+    font-size: 14px; /* Adjust font size */
+}
+
+.updatepassword {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    transform: translate(64px, 11px);
+}
+
+.updatepassword:hover {
+    background: #0056b3;
+}
+
+.passchangemessage{
+    transform: translate(7px, 26px);
+}

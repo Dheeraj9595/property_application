@@ -31,6 +31,10 @@
         </div>
     
         <button onclick="updateProfile()" class="updateprofile">Update Profile</button>
+        <button>
+            <a href="{% url 'changepassword' %}" class="updateprofile">Change Password</a>
+        </button>
+        
         <p id="message"></p>
     </div>     
         <script src="{% static 'loginapplication/js/profile.js' %}"></script>
