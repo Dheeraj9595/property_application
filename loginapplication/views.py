@@ -179,10 +179,6 @@ class SignupView(View):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-
-            if user.role == "Admin":
-                return render(request, "signup.html", {"form": form, "error": "You cannot register as an Admin."})
-
             user.set_password(form.cleaned_data["password"])  # Hash password
             user.save()
             login(request, user)

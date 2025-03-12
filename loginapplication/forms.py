@@ -14,10 +14,10 @@ class SignupForm(forms.ModelForm):
             "role": forms.Select(attrs={"class": "form-control"}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        #Remove Admin from Role Choices
-        self.fields["role"].choices = [(role, role) for role in ["Tenant", "Landlord"]]
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     #Remove Admin from Role Choices
+    #     self.fields["role"].choices = [(role, role) for role in ["Tenant", "Landlord"]]
 
 
     def clean(self):
