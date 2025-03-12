@@ -56,7 +56,10 @@
       </div>
 
       <button type="submit">Log in</button>
-      <a href="#" class="discrete">Forgot password?</a>
+      <button>
+        <a href="{% url 'signup' %}" >Sign up</a>
+    </button>
+      <a href="{% url 'forgetpasswordpage' %}" class="discrete">Forgot password?</a>
     </form>
   </div>
 </body>
