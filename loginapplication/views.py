@@ -18,7 +18,13 @@ from loginapplication.serializers import UserSerializer
 User = get_user_model()
 logger = logging.getLogger(__name__)
 from datetime import datetime
+from django_ratelimit.decorators import ratelimit
+
+@ratelimit(key='ip', rate='5/m', method='POST', block=True)
 def login_view(request):
+    if getattr(request, 'limited', False):
+        return render(request, '429.html', status=429)
+
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")

@@ -1,3 +1,4 @@
 1. fix signup page / beautify
 2. improve profile page
 3. improve listing of property in buying page
+4. rate limiting is applied enhance rate limiting
