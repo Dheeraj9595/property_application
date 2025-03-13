@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 
@@ -199,3 +199,63 @@ EMAIL_HOST_USER = 'dheeraj.systango@gmail.com'
 EMAIL_HOST_PASSWORD = 'tcgyldmtwkipjeek'
 #dheeraj.systango@gmail.com
 #tcgyldmtwkipjeek
+
+import os
+import logging
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        # Rotating file handler (Size-based rotation)
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "django_debug.log"),  # Log file path
+            "maxBytes": 5 * 1024 * 1024,  # 5MB limit per file
+            "backupCount": 5,  # Keep the last 5 log files
+            "formatter": "verbose",
+        },
+
+        # Time-based rotation (Daily rotation)
+        "timed_file": {
+            "level": "DEBUG",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "django_daily.log"),
+            "when": "midnight",  # Rotate logs daily
+            "interval": 1,
+            "backupCount": 7,  # Keep logs for the last 7 days
+            "formatter": "verbose",
+        },
+
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file", "timed_file", "console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "loginapplication": {
+            "handlers": ["file", "timed_file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
+

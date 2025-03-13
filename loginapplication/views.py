@@ -1,5 +1,5 @@
 import json
-
+import logging
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
@@ -16,8 +16,8 @@ from loginapplication.models import User
 from loginapplication.serializers import UserSerializer
 
 User = get_user_model()
-
-
+logger = logging.getLogger(__name__)
+from datetime import datetime
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -27,6 +27,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
+            logger.info(f"User Logged In>>>>>>>>>>>>>>>>>> : username: {user.username} email: {user.email} time: {datetime.now()}")
             return redirect(
                 "http://localhost:8000/api/home/"
             )  # Redirect to home page or dashboard
@@ -182,5 +183,6 @@ class SignupView(View):
             user.set_password(form.cleaned_data["password"])  # Hash password
             user.save()
             login(request, user)
+            logger.info(f"New user registered: {user.username}")
             return redirect("home")  # Redirect to homepage after signup
         return render(request, "signup.html", {"form": form})
