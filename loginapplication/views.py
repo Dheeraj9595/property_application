@@ -26,10 +26,18 @@ def login_view(request):
         return render(request, '429.html', status=429)
 
     if request.method == "POST":
-        username = request.POST.get("username")
+        username_or_email = request.POST.get("username")
         password = request.POST.get("password")
 
-        user = authenticate(username=username, password=password)
+        user = User.objects.filter(email=username_or_email).first()
+
+        if user:
+            username = user.username
+        else:
+            username = username_or_email
+
+        user = authenticate(username=username, password=password)        
+
 
         if user is not None:
             login(request, user)
