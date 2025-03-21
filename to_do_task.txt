@@ -2,3 +2,7 @@
 2. improve profile page
 3. improve listing of property in buying page
 4. rate limiting is applied enhance rate limiting
+
+5. RAG application in llm external data
+6. tool (llm)
+7. vector databases (theory)

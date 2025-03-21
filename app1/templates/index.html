@@ -5,6 +5,7 @@
 {% block content %}
 <!-- Header Image Section -->
 <link rel="stylesheet" href="{% static 'app1/css/property_form.css'%}">
+<link rel="stylesheet" href="{% static 'chatapp/css/chatbot.css'%}">
 <div class="headerimage">
     <div class="headeriamge1">
         <div class="house"></div>
@@ -18,15 +19,7 @@
         </div>
     </div>
 </div>
-<style>
-    body {
-        background-image: url("{% static 'app1/images/background.jpg' %}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-    }
-</style>
+
 <!-- Main Content -->
 <div class="content">
     <div class="innercontent">
@@ -36,7 +29,6 @@
                 <div class="leftpan2">
                     <div class="leftmenu">
                         <ul>
-        
                         </ul>
                     </div>
                 </div>
@@ -44,4 +36,27 @@
         </div>
     </div>
 </div>
+
+<!-- Floating Chatbot Button -->
+<button class="chatbot-toggle" onclick="toggleChatbot()">💬 Chat</button>
+
+<!-- Chatbot Window -->
+<div class="chatbot-container" id="chatbotContainer">
+    <div class="chatbot-header">
+        <span>Chatbot</span>
+        <button class="close-btn" onclick="toggleChatbot()">✖</button>
+    </div>
+    <div class="box" id="chatBox">
+        <!-- Messages will be dynamically inserted here -->
+    </div>
+    <div class="typing-area">
+        <div class="input-field">
+            <input type="text" id="userMessage" placeholder="Type your message" required>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'chatapp/js/chatbot.js' %}"></script>
+
 {% endblock %}

@@ -7,6 +7,15 @@ from groq import Groq
 # Initialize Groq client
 client = Groq(api_key="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")
 
+
+# Define the system prompt
+SYSTEM_PROMPT = ("You are a real estate assistant. Answer questions about property buying and selling."
+                 "You are a concise assistant. "
+                 "Always answer in MAX 150 characters. "
+                 "Use short bullet points or highlighted key points only.")
+#You are a real estate assistant. Answer questions about property buying and selling.
+
+
 @csrf_exempt
 def chatbot_response(request):
     if request.method == "POST":
@@ -15,11 +24,13 @@ def chatbot_response(request):
 
         try:
             chat_completion = client.chat.completions.create(
-                messages=[{"role": "user", "content": user_message}],
-                model="llama-3.3-70b-versatile",
+                messages=[{"role": "system", "content": SYSTEM_PROMPT},  # System prompt
+                    {"role": "user", "content": user_message}],
+                model="llama-3.1-8b-instant",
             )
 
             bot_reply = chat_completion.choices[0].message.content
+            # breakpoint()
             return JsonResponse({"response": bot_reply})
 
         except Exception as e:
