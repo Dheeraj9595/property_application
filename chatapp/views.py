@@ -12,8 +12,8 @@ client = Groq(api_key="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"
 SYSTEM_PROMPT = ("You are a real estate assistant. Answer questions about property buying and selling."
                  "You are a concise assistant. "
                  "Always answer in MAX 150 characters. "
-                 "Use short bullet points or highlighted key points only.")
-#You are a real estate assistant. Answer questions about property buying and selling.
+                 "Use short bullet points or highlighted key points only."
+                 "If someone ask property near indore suggest him/her 1. khandwa road properties are better and value for money 2. Super corridor road")
 
 
 @csrf_exempt
