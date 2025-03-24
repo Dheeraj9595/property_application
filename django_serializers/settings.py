@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "loginapplication",
     'rest_framework.authtoken',
+    'rag',
   
 ]
 

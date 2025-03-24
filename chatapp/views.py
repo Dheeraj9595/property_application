@@ -9,12 +9,9 @@ client = Groq(api_key="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"
 
 
 # Define the system prompt
-SYSTEM_PROMPT = ("You are a real estate assistant. Answer questions about property buying and selling."
-                 "You are a concise assistant. "
-                 "Always answer in MAX 150 characters. "
-                 "Use short bullet points or highlighted key points only."
-                 "If someone ask property near indore suggest him/her 1. khandwa road properties are better and value for money 2. Super corridor road")
 
+
+from rag.vector_store import retrieve_documents
 
 @csrf_exempt
 def chatbot_response(request):
@@ -22,9 +19,14 @@ def chatbot_response(request):
         data = json.loads(request.body)
         user_message = data.get("message", "")
 
+        retrived_docs = retrieve_documents(user_message)
+        context = " ".join(retrived_docs) if retrived_docs else ""
+
+        PROMPT = (f"Context: {context}\nYou are a real estate assistant. Answer questions about property buying and selling.\nYou are a concise assistant.\nAlways answer in MAX 150 characters.\nUse short bullet points or highlighted key points only.\nIf someone ask property near indore suggest him/her 1. khandwa road properties are better and value for money 2. Super corridor road")
+
         try:
             chat_completion = client.chat.completions.create(
-                messages=[{"role": "system", "content": SYSTEM_PROMPT},  # System prompt
+                messages=[{"role": "system", "content": PROMPT},  # System prompt
                     {"role": "user", "content": user_message}],
                 model="llama-3.1-8b-instant",
             )
