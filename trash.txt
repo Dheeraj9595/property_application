@@ -1,0 +1,61 @@
+import chromadb
+from sentence_transformers import SentenceTransformer
+from pypdf import PdfReader
+from docx import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# Load sentence transformer model for embeddings
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+# Initialize ChromaDB client
+client = chromadb.PersistentClient(path="./chroma_db")
+collection = client.get_or_create_collection(name="knowledge_base")
+
+def extract_text_from_pdf(pdf_path):
+    """Extract text from a PDF file"""
+    reader = PdfReader(pdf_path)
+    text = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+    return text
+
+def extract_text_from_docx(docx_path):
+    """Extract text from a DOCX file"""
+    doc = Document(docx_path)
+    text = "\n".join([para.text for para in doc.paragraphs])
+    return text
+
+def add_document(text, doc_id):
+    """Add a document to ChromaDB"""
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    chunks = text_splitter.split_text(text)
+
+    for i, chunk in enumerate(chunks):
+        chunk_id = f"{doc_id}_chunk_{i}"  # Create unique ID for each chunk
+        embedding = model.encode(chunk).tolist()
+        collection.add(ids=[chunk_id], embeddings=[embedding], documents=[chunk])
+
+def process_and_store_file(file_path, doc_id):
+    """Extract, process, and store a file in ChromaDB"""
+    if file_path.endswith(".pdf"):
+        text = extract_text_from_pdf(file_path)
+    elif file_path.endswith(".docx"):
+        text = extract_text_from_docx(file_path)
+    else:
+        raise ValueError("Unsupported file format")
+
+    add_document(text, doc_id)
+    print(f"Document {doc_id} stored successfully!")
+
+def retrieve_documents(query, top_k=3):
+    """Retrieve top-k relevant documents from ChromaDB"""
+    query_embedding = model.encode(query).tolist()
+    results = collection.query(query_embeddings=[query_embedding], n_results=top_k)
+    return results["documents"][0] if results else []
+
+def update_documents(doc_id, new_text):
+    """Update an existing document in the vector database"""
+    # Delete the old document
+    collection.delete(ids=[doc_id])
+    
+    # Add the updated document
+    add_document(new_text, doc_id)
+    print(f"Document {doc_id} updated successfully!")

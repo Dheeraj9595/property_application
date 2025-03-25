@@ -22,7 +22,7 @@ def chatbot_response(request):
         retrived_docs = retrieve_documents(user_message)
         context = " ".join(retrived_docs) if retrived_docs else ""
 
-        PROMPT = (f"Context: {context}\nYou are a real estate assistant. Answer questions about property buying and selling.\nYou are a concise assistant.\nAlways answer in MAX 150 characters.\nUse short bullet points or highlighted key points only.\nIf someone ask property near indore suggest him/her 1. khandwa road properties are better and value for money 2. Super corridor road")
+        PROMPT = (f"Context: {context}\nYou are a assistant.\nAnswer questions related to docs which are in db or anything asked for.")
 
         try:
             chat_completion = client.chat.completions.create(
