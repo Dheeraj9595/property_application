@@ -1,5 +1,3 @@
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS  # or Chroma, Pinecone, Weaviate, etc.
 from pypdf import PdfReader
 from docx import Document
 from rag.vector_store import *  # Ensure this has `add_document` & `add_large_document`
