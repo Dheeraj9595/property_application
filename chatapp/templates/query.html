@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'chatapp/css/query.css' %}">
+
+<div class="chat-container">
+    <h2>Query Documents</h2>
+    <div class="chat-box" id="chatBox">
+        <!-- Messages will be dynamically inserted here -->
+    </div>
+    <div class="chat-input">
+        <input type="text" id="userMessage" placeholder="Ask something..." required>
+        <button onclick="queryDocument()">Send</button>
+    </div>
+</div>
+
+<script src="{% static 'chatapp/js/query.js' %}"></script>
+{% endblock %}

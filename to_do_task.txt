@@ -6,3 +6,4 @@
 5. RAG application in llm external data
 6. tool (llm)
 7. vector databases (theory)
+8. to explore weaviate databases

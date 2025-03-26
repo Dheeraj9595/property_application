@@ -25,5 +25,24 @@ def upload_document(request):
             return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "No file uploaded"}, status=400)
 
+import json
+from rag.vector_store import retrieve_documents
+
+
+@csrf_exempt
+def query_document(request):
+    """Handles query in chromadb storage"""
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user_message = data.get("message", "")
+        query_response = retrieve_documents(query=user_message, top_k=3)
+        return JsonResponse({"response": query_response})
+    else:
+        return render(request, 'query.html')
+    
 def upload_document_page(request):
     return render(request, 'upload.html')
+
+def query_page(request):
+    return render(request, 'query.html')
+

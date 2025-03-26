@@ -262,3 +262,4 @@ LOGGING = {
     },
 }
 
+CSP_CONNECT_SRC = ["'self'", "http://localhost:8000"]
