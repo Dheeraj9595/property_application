@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'chatapp/css/query.css' %}">
+
+
+
+<div class="container">
+    <h2>Upload a Document</h2>
+    <input type="file" id="document" accept=".pdf, .docx">
+    <button onclick="uploadFile()">Upload</button>
+    <p id="message"></p>
+</div>
+
+<script>
+    function uploadFile() {
+        let fileInput = document.getElementById("document");
+        if (fileInput.files.length === 0) {
+            alert("Please select a file!");
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append("document", fileInput.files[0]);
+
+        fetch("/upload-document/", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("message").textContent = data.message || data.error;
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+
+<script src="{% static 'chatapp/js/query.js' %}"></script>
+{% endblock %}
