@@ -233,3 +233,12 @@ def process_and_store_pdf(pdf_path, doc_id):
 | Store extracted text | ChromaDB |
 
 Now your Django project can handle **both text-based and image-based PDFs** efficiently! 🚀 Let me know if you need further modifications.
+
+
+
+## ** Weaviate DB **
+
+
+1. to access with weaviate DB first docker up the container by docker-compose up -d
+2. then try with retrieve data , insert data and retrieve by uuid urls 
+
