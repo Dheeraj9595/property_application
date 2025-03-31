@@ -19,11 +19,10 @@ def chatbot_response(request):
         data = json.loads(request.body)
         user_message = data.get("message", "")
 
-        retrived_docs = retrieve_documents(user_message)
-        context = " ".join(retrived_docs) if retrived_docs else ""
+        # retrived_docs = retrieve_documents(user_message)
+        # context = " ".join(retrived_docs) if retrived_docs else ""
 
-        PROMPT = (f"Context: {context}\nYou are a assistant.\nAnswer questions related to docs which are in db or anything asked for.")
-
+        PROMPT = (f"Context: \nYou are a assistant.\nAnswer questions related to docs which are in db or anything asked for.")
         try:
             chat_completion = client.chat.completions.create(
                 messages=[{"role": "system", "content": PROMPT},  # System prompt

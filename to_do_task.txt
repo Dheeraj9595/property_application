@@ -7,3 +7,5 @@
 6. tool (llm)
 7. vector databases (theory)
 8. to explore weaviate databases
+9. how to impliment embeddings in weaviate
+10. what is weaviate schemas how to generate it
