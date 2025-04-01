@@ -31,7 +31,7 @@ from rag.vector_store import retrieve_documents
 
 @csrf_exempt
 def query_document(request):
-    """Handles query in chromadb storage"""
+    """Handles query in weaviate storage"""
     if request.method == "POST":
         data = json.loads(request.body)
         user_message = data.get("message", "")

@@ -50,23 +50,33 @@ def add_document(text, doc_id):
         vector=embedding  # Store embedding in Weaviate
     )
 
-
-
+    
 @with_weaviate_client
 def data_insert_into_weaviate(client, text, collection_name):
+    # Compute embedding for the text
+    vector = model.encode(text).tolist()
+
+    # Check if the collection exists
     if collection_name not in [col for col in client.collections.list_all()]:
-        # Create collection if it doesn't exist
+        # Create collection with a vector index
         client.collections.create(
             name=collection_name,
-            properties=[Property(name="content", data_type=DataType.TEXT)],
+            properties=[
+                Property(name="content", data_type=DataType.TEXT),
+            ],
+            vectorizer_config=None,  # Disable Weaviate's built-in vectorizer
         )
-    
-    # Insert Data
+
+    # Insert data with embedding
     collection = client.collections.get(collection_name)
-    collection.data.insert({"content": text})
+    collection.data.insert(
+        {"content": text},
+        vector=vector  # Store the computed embedding
+    )
+    
     print(f"Data inserted into collection: {collection_name} successfully")
 
-    return JsonResponse({"message": f"Your data is inserted into Collection: {collection_name}"})
+    return JsonResponse({"message": f"Your data is inserted into Collection: {collection_name} with embeddings"})
 
 # Function to Retrieve Data
 @with_weaviate_client
