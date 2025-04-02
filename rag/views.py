@@ -35,7 +35,8 @@ def query_document(request):
     if request.method == "POST":
         data = json.loads(request.body)
         user_message = data.get("message", "")
-        query_response = retrieve_documents(query=user_message, top_k=3)
+        collection_name = data.get("collection_name", "")
+        query_response = retrieve_documents(query_text=user_message, collection_name=collection_name,top_k=3)
         return JsonResponse({"response": query_response})
     else:
         return render(request, 'query.html')
