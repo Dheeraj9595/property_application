@@ -78,17 +78,36 @@ def data_insert_into_weaviate(client, text, collection_name):
 
     return JsonResponse({"message": f"Your data is inserted into Collection: {collection_name} with embeddings"})
 
-# Function to Retrieve Data
-@with_weaviate_client
-def retrieve_documents(client, collection_name):
-    if collection_name not in [col for col in client.collections.list_all()]:
-        return JsonResponse({"error": "Collection does not exist"}, status=404)
+import numpy as np
 
+@with_weaviate_client
+def retrieve_documents(client, query_text, collection_name="MyCollectionVar1", top_k=5):
+    """Searches Weaviate for the most relevant documents based on the query text."""
+    # Initialize embedding model
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    # Get collection
     collection = client.collections.get(collection_name)
-    response = collection.query.fetch_objects()
-    result = {"documents": [obj.properties["content"] for obj in response.objects]}
-    client.close()
-    return json.dumps(result, indent=2)
+
+    # Generate embedding for query text
+    query_embedding = model.encode(query_text)
+
+    # Convert to list (Weaviate requires lists, not numpy arrays)
+    if isinstance(query_embedding, np.ndarray):
+        query_embedding = query_embedding.tolist()
+
+    try:
+        # Perform nearest neighbor search
+        response = collection.query.near_vector(
+            near_vector=query_embedding,
+            limit=top_k,  # Number of results to return
+            return_metadata=weaviate.classes.query.MetadataQuery(distance=True)
+        )
+        results = [obj.properties["content"] for obj in response.objects] if response.objects else []
+        return results
+    except Exception as e:
+        return str(e)
+ 
 
 import json
 from django.http import JsonResponse

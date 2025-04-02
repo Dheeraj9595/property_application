@@ -102,23 +102,29 @@ def insert_data(request):
         return JsonResponse({"error": "Invalid JSON format"}, status=400)
 
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+# Django view
 @csrf_exempt
 def retrieve_data(request):
-    """Fetches stored text data from a Weaviate collection."""
+    """Fetches relevant documents from a Weaviate collection using embeddings."""
     if request.method != "POST":
         return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
 
     try:
         data = json.loads(request.body)
-        collection_name = data.get("collection_name")
+        collection_name = data.get("collection_name", "MyCollectionVar1")  # Default collection if not provided
+        query_text = data.get("query")
 
-        if not collection_name:
-            return JsonResponse({"error": "Missing 'collection_name'"}, status=400)
+        if not query_text:
+            return JsonResponse({"error": "Missing 'query' parameter"}, status=400)
 
-        result = retrieve_documents(collection_name=collection_name)
-        result_dict = json.loads(result)  # Convert JSON string to Python dictionary
+        # Call the Weaviate search function
+        results = retrieve_documents(query_text=query_text, collection_name=collection_name)
 
-        return JsonResponse({"response": result_dict})
+        return JsonResponse({"response": results if results else ["No relevant documents found."]})
 
     except json.JSONDecodeError:
         return JsonResponse({"error": "Invalid JSON format"}, status=400)
